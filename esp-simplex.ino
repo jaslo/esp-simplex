@@ -1,4 +1,8 @@
+
 #include <stdarg.h>
+#include <BearSSLHelpers.h>
+#include <CertStoreBearSSL.h>
+#include <ESP8266WiFi.h>
 
 /**
    The MIT License (MIT)
@@ -40,8 +44,8 @@
 // #include <SoftwareSerial.h>
 
 // WIFI configuration
-#define WIFI_SSID "jaslonetn"
-#define WIFI_KEY  "winwheel"
+#define WIFI_SSID "xxxxxxxx"
+#define WIFI_KEY  "xxxxxxxx"
 
 // NTP server name or IP, sync interval in seconds
 static const char ntpServerName[] = "pool.ntp.org";
@@ -51,8 +55,8 @@ static const char ntpServerName[] = "pool.ntp.org";
 #define SCREENSAVER_TIMER 600
 
 // Time Zone (DST) settings, change to your country
-TimeChangeRule PDT = { "PDT", Last, Sun, Mar, 2, -420 }; // Central European Summer Time
-TimeChangeRule PST =  { "PST ", Last, Sun, Oct, 3, -480 }; // Central European Standard Time
+TimeChangeRule PDT = { "PDT", Second, Sun, Mar, 2, -420 };
+TimeChangeRule PST =  { "PST ", First, Sun, Nov, 3, -480 };
 Timezone ClockTZ(PDT,PST);
 
 unsigned int localPort = 8888;
@@ -92,7 +96,7 @@ void setup() {
   // set hostname
   WiFi.hostname(hname);
   // connect to wifi
-  log_i(console_text, "Connecting to wifi (%s)", WIFI_SSID);
+  log_i("Connecting to wifi (%s)", WIFI_SSID);
   WiFi.begin(WIFI_SSID, WIFI_KEY);
   
   while (WiFi.status() != WL_CONNECTED) {
